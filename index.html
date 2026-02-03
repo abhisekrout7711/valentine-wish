@@ -4,6 +4,39 @@
 <meta charset="UTF-8">
 <title>Be My Valentine 💖</title>
 
+<script>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+
+    if (!token) {
+      document.addEventListener("DOMContentLoaded", () => {
+        document.body.innerHTML =
+          "<h1 style='color:white;text-align:center;'>❌ Invalid link</h1>";
+      });
+      return;
+    }
+
+    fetch(`/.netlify/functions/validate?token=${token}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data.ok) {
+          document.addEventListener("DOMContentLoaded", () => {
+            document.body.innerHTML =
+              "<h1 style='color:white;text-align:center;'>💔 This link has already been used 💔</h1>";
+          });
+        }
+      })
+      .catch(() => {
+        document.addEventListener("DOMContentLoaded", () => {
+          document.body.innerHTML =
+            "<h1 style='color:white;text-align:center;'>⚠️ Server error</h1>";
+        });
+      });
+  })();
+</script>
+
+
 <style>
   body {
     margin: 0;
@@ -94,10 +127,10 @@
 
 <script>
   // One-time use
-  if (localStorage.getItem("valentineUsed")) {
-    document.body.innerHTML =
-      "<h1 style='color:white;text-align:center;'>💔 This link has already been used 💔</h1>";
-  }
+  // if (localStorage.getItem("valentineUsed")) {
+  //   document.body.innerHTML =
+  //     "<h1 style='color:white;text-align:center;'>💔 This link has already been used 💔</h1>";
+  // }
 
   const noBtn = document.getElementById("no");
   const yesBtn = document.getElementById("yes");
