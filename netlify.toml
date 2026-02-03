@@ -1,6 +1,5 @@
+[build]
+  publish = "."
+
 [functions]
   directory = "netlify/functions"
-
-[[edge_functions]]
-  path = "/.netlify/edge-functions/validate"
-  function = "validate"

@@ -17,7 +17,7 @@
       return;
     }
 
-    fetch(`/.netlify/edge-functions/validate?token=${token}`)
+    fetch(`/.netlify/functions/validate?token=${token}`)
       .then(res => res.json())
       .then(data => {
         if (!data.ok) {

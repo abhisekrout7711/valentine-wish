@@ -1,0 +1,7 @@
+{
+  "name": "valentine-wish",
+  "private": true,
+  "dependencies": {
+    "@netlify/blobs": "^6.0.0"
+  }
+}
