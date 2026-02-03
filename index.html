@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: 'Comic Sans MS', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    text-align: center;
+    z-index: 10;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 2px 2px 6px #b30059;
+  }
+
+  button {
+    padding: 15px 30px;
+    font-size: 1.3rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 20px;
+  }
+
+  #yes {
+    background: #ff3366;
+    color: white;
+  }
+
+  #no {
+    background: #444;
+    color: white;
+    position: absolute;
+  }
+
+  .flowers {
+    font-size: 3rem;
+    animation: pop 1s ease-in-out infinite alternate;
+  }
+
+  @keyframes pop {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 24px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes floatUp {
+    from {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-110vh) scale(1.5);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+  <h1>Will you be my Valentine? 💘</h1>
+  <button id="yes">Yes ❤️</button>
+  <button id="no">No ❌</button>
+</div>
+
+<!-- Romantic Music -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // One-time use
+  if (localStorage.getItem("valentineUsed")) {
+    document.body.innerHTML =
+      "<h1 style='color:white;text-align:center;'>💔 This link has already been used 💔</h1>";
+  }
+
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const music = document.getElementById("music");
+
+  // Try autoplay, fallback on click
+  document.addEventListener("click", () => {
+    music.play().catch(() => {});
+  }, { once: true });
+
+  // No button escape
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 60);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  });
+
+  // Yes click
+  yesBtn.addEventListener("click", () => {
+    // localStorage.setItem("valentineUsed", "true");
+    music.play();
+
+    document.getElementById("main").innerHTML = `
+      <h1>Yayyy!! 💖</h1>
+      <p style="color:white;font-size:1.4rem;">You just made my heart smile ❤️</p>
+      <div class="flowers">🌸🌺🌷💐🌹</div>
+    `;
+  });
+
+  // Heart generator
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7000);
+  }
+
+  setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
